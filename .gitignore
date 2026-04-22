@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Packaging/build outputs
+build/
+dist/
+*.egg-info/
+
+# Test/cache tools
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+
+# VS Code settings (optional)
+.vscode/
+
+# Coverage files (optional, useful later)
+.coverage
+htmlcov/

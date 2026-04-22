@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spMosaic"
+version = "0.1.0"
+description = "Multi-sample spatial transcriptomics integration and spatial domain detection."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+authors = [
+  { name = "Shiwei Fu", email = "shiwei.fu@email.ucr.edu" }
+]
+license = { text = "MIT" }
+
+dependencies = [
+  "numpy",
+  "pandas",
+  "scipy",
+  "scikit-learn",
+  "torch",
+  "psutil"
+]
+
+[project.optional-dependencies]
+singlecell = [
+  "anndata",
+  "scanpy<1.12"
+]
+plot = [
+  "matplotlib",
+  "seaborn"
+]
+dev = [
+  "pytest",
+  "build"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+spmosaic = ["r/*.R"]
