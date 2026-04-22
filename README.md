@@ -1,8 +1,7 @@
 # spMosaic
-
-## Introduction
 spMosaic is a Python method for integrating multi-sample spatial transcriptomics data and identifying biologically meaningful spatial domains. It can jointly analyze samples regardless of whether they are collected from the same donor or from different donors.
 
+## Overview
 The spMosaic pipeline consists of two stages.
 
 **1. Sample-wise spatial smoothing and common SVG selection**
