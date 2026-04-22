@@ -87,4 +87,4 @@ The ``which Rscript`` command should point to the Rscript executable inside your
 Please see the `examples` folder for tutorials. They are provided as Jupyter notebooks.
 
 ## Issues and communications
-If you have any issues using this package, please post them here. Any suggestions and comments are welcome! For suggestions and comments, please contact Shiwei Fu (shiwei.fu@email.ucr.edu) or Wei Vivian Li (weil@ucr.edu).
+If you have any issues using this package, please post them [here](https://github.com/ShweiSTAT/spMosaic/issues). Any suggestions and comments are welcome! For suggestions and comments, please contact Shiwei Fu (shiwei.fu@email.ucr.edu) or Wei Vivian Li (weil@ucr.edu).
