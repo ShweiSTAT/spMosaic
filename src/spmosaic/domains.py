@@ -675,19 +675,38 @@ def domain_detection(
         )
 
     ## output
-    spot_embd = pd.DataFrame(h_G_all.cpu().numpy(), index=metadata["barcode"])
-    spot_meta = adata.obs.copy()
-    wanted_spot_meat_cols = [
-        "sample_name", "row", "col", "sum_umi",
-        "DEC_init_cluster", "spatial_cluster", "spatial_cluster_refined"
-    ]
-    selected_cols = [c for c in wanted_spot_meat_cols if c in spot_meta.columns]
-    spot_meta = spot_meta.loc[:, selected_cols].copy()
+    # spot_embd = pd.DataFrame(h_G_all.cpu().numpy(), index=metadata["barcode"])
+    # spot_meta = adata.obs.copy()
+    # wanted_spot_meat_cols = [
+    #     "sample_name", "row", "col", "sum_umi",
+    #     "DEC_init_cluster", "spatial_cluster", "spatial_cluster_refined"
+    # ]
+    # selected_cols = [c for c in wanted_spot_meat_cols if c in spot_meta.columns]
+    # spot_meta = spot_meta.loc[:, selected_cols].copy()
 
-    outs = {
-        "Spot_embd": spot_embd,
-        "Spot_meta": spot_meta,
-    }
+    # outs = {
+    #     "Spot_embd": spot_embd,
+    #     "Spot_meta": spot_meta,
+    # }
+
+    # DEC_out_path = os.path.join(input_dir, f"{prefix}_dec_output")
+    # os.makedirs(DEC_out_path, exist_ok=True)
+
+    # Spot_embd_path = os.path.join(DEC_out_path, f"{prefix}_spot_embd.csv")
+    # Spot_meta_path = os.path.join(DEC_out_path, f"{prefix}_spot_meta.csv")
+
+    # print("outting: " + Spot_embd_path)
+    # print("outting: " + Spot_meta_path)
+    # outs["Spot_embd"].to_csv(Spot_embd_path)
+    # outs["Spot_meta"].to_csv(Spot_meta_path)
+
+    # h5ad_out = sc.read_h5ad(h5ad_path)
+    # h5ad_out.obsm["spmosaic_embd"] = spot_embd.to_numpy(dtype=float)
+    # h5ad_out.obsm["spatial"] = spot_meta[["col", "row"]].to_numpy(dtype=float)
+    # h5ad_out.obs = spot_meta
+    
+    ## output
+    print("Saving stage 2 outputs ...")
 
     DEC_out_path = os.path.join(input_dir, f"{prefix}_dec_output")
     os.makedirs(DEC_out_path, exist_ok=True)
@@ -695,15 +714,69 @@ def domain_detection(
     Spot_embd_path = os.path.join(DEC_out_path, f"{prefix}_spot_embd.csv")
     Spot_meta_path = os.path.join(DEC_out_path, f"{prefix}_spot_meta.csv")
 
-    print("outting: " + Spot_embd_path)
-    print("outting: " + Spot_meta_path)
-    outs["Spot_embd"].to_csv(Spot_embd_path)
-    outs["Spot_meta"].to_csv(Spot_meta_path)
-
+    # Reload original h5ad so we preserve original metadata
     h5ad_out = sc.read_h5ad(h5ad_path)
-    h5ad_out.obsm["spmosaic_embd"] = spot_embd.to_numpy(dtype=float)
-    h5ad_out.obsm["spatial"] = spot_meta[["col", "row"]].to_numpy(dtype=float)
+
+    # Spot embedding output
+    spot_embd = pd.DataFrame(
+        h_G_all.detach().cpu().numpy(),
+        index=metadata["barcode"]
+    )
+
+    # Start metadata from original h5ad obs
+    spot_meta = h5ad_out.obs.copy()
+    spot_meta.index = spot_meta.index.astype(str)
+
+    # Make sure intermediate metadata also uses string barcode index
+    metadata = metadata.copy()
+    metadata.index = metadata.index.astype(str)
+
+    # Add clustering results from the refined AnnData object
+    dec_output_cols = [
+        "DEC_init_cluster",
+        "spatial_cluster",
+        "spatial_cluster_refined",
+    ]
+
+    for col in dec_output_cols:
+        if col in adata.obs.columns:
+            spot_meta[col] = adata.obs.loc[spot_meta.index, col].values
+
+    # Reorder columns:
+    # first selected key input columns, then other original h5ad columns,
+    # then spMosaic output columns
+    key_input_cols = ["sample_name", "row", "col", "sum_umi"]
+
+    existing_key_cols = [c for c in key_input_cols if c in spot_meta.columns]
+    existing_dec_cols = [c for c in dec_output_cols if c in spot_meta.columns]
+
+    other_original_cols = [
+        c for c in h5ad_out.obs.columns
+        if c not in existing_key_cols and c not in existing_dec_cols
+    ]
+
+    final_cols = existing_key_cols + other_original_cols + existing_dec_cols
+    spot_meta = spot_meta.loc[:, final_cols].copy()
+
+    # Align embedding and metadata to the same barcode order
+    common_barcodes = spot_meta.index.intersection(spot_embd.index)
+    spot_meta = spot_meta.loc[common_barcodes].copy()
+    spot_embd = spot_embd.loc[common_barcodes].copy()
+
+    # Save CSV outputs
+    print("Outputting:", Spot_embd_path)
+    print("Outputting:", Spot_meta_path)
+
+    spot_embd.to_csv(Spot_embd_path)
+    spot_meta.to_csv(Spot_meta_path)
+
+    # Add outputs back to AnnData
+    h5ad_out = h5ad_out[common_barcodes].copy()
     h5ad_out.obs = spot_meta
+    h5ad_out.obsm["spmosaic_embd"] = spot_embd.to_numpy(dtype=float)
+
+    if {"col", "row"}.issubset(spot_meta.columns):
+        h5ad_out.obsm["spatial"] = spot_meta[["col", "row"]].to_numpy(dtype=float)
 
     print("All done for stage 2!")
     return h5ad_out
