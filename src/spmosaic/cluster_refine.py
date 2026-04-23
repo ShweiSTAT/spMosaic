@@ -1,4 +1,4 @@
-"""Stage 3 spatial domain refinement after stage 2 for spMosaic."""
+"""Stage 3 (optional) spatial domain refinement after stage 2 for spMosaic."""
 
 from __future__ import annotations
 
