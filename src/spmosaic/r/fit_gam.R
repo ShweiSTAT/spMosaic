@@ -4,6 +4,15 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 
+print("BLAS/OpenMP thread settings seen by R:")
+print(Sys.getenv(c(
+  "OMP_NUM_THREADS",
+  "OPENBLAS_NUM_THREADS",
+  "MKL_NUM_THREADS",
+  "VECLIB_MAXIMUM_THREADS",
+  "BLAS_NUM_THREADS"
+)))
+
 input_root <- args[1]
 prefix <- args[2]
 ncores <- as.integer(args[3])

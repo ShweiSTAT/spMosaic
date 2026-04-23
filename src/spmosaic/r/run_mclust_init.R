@@ -1,4 +1,17 @@
+##################
+## Read in parameters from py
+##################
+
 args <- commandArgs(trailingOnly = TRUE)
+
+print("BLAS/OpenMP thread settings seen by R:")
+print(Sys.getenv(c(
+  "OMP_NUM_THREADS",
+  "OPENBLAS_NUM_THREADS",
+  "MKL_NUM_THREADS",
+  "VECLIB_MAXIMUM_THREADS",
+  "BLAS_NUM_THREADS"
+)))
 
 embedding_csv <- args[1]
 labels_csv <- args[2]
@@ -10,6 +23,10 @@ seed <- as.integer(args[6])
 set.seed(seed)
 
 suppressPackageStartupMessages({library(mclust)})
+
+################
+## Running mclust
+#################
 
 X <- read.csv(embedding_csv, header = TRUE, check.names = FALSE)
 X_mat <- as.matrix(X)
