@@ -223,7 +223,7 @@ def batch_refine_label(
         categorical_out = False
 
     # ---- Build per-batch neighbor indices once (static graph) ----
-    batch_groups = adata.obs.groupby(batch_key, sort=False).groups
+    batch_groups = adata.obs.groupby(batch_key, sort=False, observed=False).groups
     per_batch = {}
     for bk, idx_names in batch_groups.items():
         idx_names = pd.Index(idx_names)
