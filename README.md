@@ -83,7 +83,7 @@ Rscript -e "library(mgcv); library(Matrix); library(data.table); library(dplyr);
 The ``which Rscript`` command should point to the Rscript executable inside your spmosaic-env conda environment, if things are correct.
 
 ## Tutorial
-Please see the `examples` folder for tutorials. They are provided as Jupyter notebooks.
+Please see the [`examples`](https://github.com/ShweiSTAT/spMosaic/tree/main/examples) folder for tutorials. They are provided as Jupyter notebooks.
 
 ## Issues and communications
 If you have any issues using this package, please post them [here](https://github.com/ShweiSTAT/spMosaic/issues). Any suggestions and comments are welcome! For suggestions and comments, please contact Shiwei Fu (shiwei.fu@email.ucr.edu) or Wei Vivian Li (weil@ucr.edu).
