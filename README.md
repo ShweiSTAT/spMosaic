@@ -42,8 +42,8 @@ These dependencies are installed automatically through the package configuration
 
 Some parts of spMosaic also rely on **R**. In particular:
 
-- **Stage 1 gene smoothing** is executed through an R subprocess
-- In **stage 2**, DEC cluster initialization may use the R package `mclust`
+- **Stage 1 gene smoothing** is executed by an R script launched from Python via `subprocess`.
+- In **stage 2**, DEC cluster initialization may use the R package `mclust`.
 
 Therefore, we recommend installing **R in the same conda environment** used for spMosaic.
 
