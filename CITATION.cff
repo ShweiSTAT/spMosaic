@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use spMosaic, please cite this software and our paper."
+title: "spMosaic: Multi-sample Integration for Scalable Spatial Domain Discovery Based on Spatial Transcriptomics"
+version: "0.1.0"
+date-released: "2026-04-26"
+authors:
+  - family-names: "Fu"
+    given-names: "Shiwei"
+  - family-names: "Li"
+    given-names: "Vivian"
+repository-code: "https://github.com/ShweiSTAT/spMosaic"
+license: "MIT"
