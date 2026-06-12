@@ -83,7 +83,10 @@ Rscript -e "library(mgcv); library(Matrix); library(data.table); library(dplyr);
 The ``which Rscript`` command should point to the Rscript executable inside your spmosaic-env conda environment, if things are correct.
 
 ## Tutorial
-Please see the [`examples`](https://github.com/ShweiSTAT/spMosaic/tree/main/examples) folder for tutorials. They are provided as Jupyter notebooks.
+Please see the [`examples`](https://github.com/ShweiSTAT/spMosaic/tree/main/examples) folder for detailed tutorials. The tutorials are provided as Jupyter notebooks and demonstrate how to run spMosaic on example spatial transcriptomics datasets. They also provide practical guidance on key analysis settings, including hyperparameter selection, choosing the number of spatial domains, SVG-selection strategies, and expected memory/runtime requirements.
+
+## Benchmark and reproducibility code
+The scripts used to reproduce the main benchmark results shown in our manuscript are archived on Zenodo: [Benchmark and reproducibility code for spMosaic](https://doi.org/10.5281/zenodo.20673202).
 
 ## Issues and communications
 If you have any issues using this package, please post them [here](https://github.com/ShweiSTAT/spMosaic/issues). Any suggestions and comments are welcome! For suggestions and comments, please contact Shiwei Fu (shiwei.fu@email.ucr.edu) or Wei Vivian Li (weil@ucr.edu).
