@@ -83,7 +83,11 @@ Rscript -e "library(mgcv); library(Matrix); library(data.table); library(dplyr);
 The ``which Rscript`` command should point to the Rscript executable inside your spmosaic-env conda environment, if things are correct.
 
 ## Tutorial
-Please see the [`examples`](https://github.com/ShweiSTAT/spMosaic/tree/main/examples) folder for detailed tutorials. The tutorials are provided as Jupyter notebooks and demonstrate how to run spMosaic on example spatial transcriptomics datasets. They also provide practical guidance on key analysis settings, including hyperparameter selection, choosing the number of spatial domains, SVG-selection strategies, and expected memory/runtime requirements.
+
+Please see the [`examples`](https://github.com/ShweiSTAT/spMosaic/tree/main/examples) folder for detailed tutorials. The within-individual and across-individual analyses use the same spMosaic workflow. We recommend reading `Example1-Visium_DLPFC.ipynb` first, as it is the primary tutorial and provides step-by-step instructions and detailed guidance on parameter settings.
+
+- [`Example1-Visium_DLPFC.ipynb`](https://github.com/ShweiSTAT/spMosaic/blob/main/examples/Example1-Visium_DLPFC.ipynb): the primary tutorial. This example demonstrates how to run spMosaic on multiple samples from the same donor and provides detailed explanations of the input format, Stage 1 spatial smoothing, Stage 2 spatial domain detection, parameter selection, and output interpretation.
+- [`Example2-MERFISH_FC.ipynb`](https://github.com/ShweiSTAT/spMosaic/blob/main/examples/Example2-MERFISH_FC.ipynb): an additional tutorial. This example demonstrates how to run spMosaic on samples from multiple individuals. Since the workflow is the same as in the within-individual setting, we recommend reading `Example1-Visium_DLPFC.ipynb` before running this example.
 
 ## Benchmark and reproducibility code
 The scripts used to reproduce the main benchmark results shown in our manuscript are archived on Zenodo: [Benchmark and reproducibility code for spMosaic](https://doi.org/10.5281/zenodo.20673202).
